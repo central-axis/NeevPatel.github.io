@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neev Patel | AI & DS Student & Geopolitical Analyst</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Hybrid Theme: Cyber Tech meets Intelligence Briefing */
+            --bg-color: #05070a;
+            --card-bg: rgba(15, 20, 30, 0.65);
+            --matrix-green: #00ff9d;
+            --cyber-blue: #00e5ff;
+            --intel-gold: #eab308;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 15% 30%, rgba(0, 229, 255, 0.04), transparent 35%),
+                radial-gradient(circle at 85% 70%, rgba(234, 179, 8, 0.03), transparent 35%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 4rem 2rem;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(200px, auto);
+            gap: 1.5rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            will-change: transform;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0; /* For scroll animation */
+            transform: translateY(30px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.02));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        .card:hover::before {
+            background: linear-gradient(135deg, var(--cyber-blue), var(--intel-gold));
+            opacity: 0.6;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 40px -10px rgba(0, 229, 255, 0.1);
+        }
+
+        /* Typography & Components */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        h2 { font-size: 1.4rem; color: #fff; }
+        h3 { font-size: 1.15rem; color: var(--cyber-blue); margin-bottom: 0.5rem; }
+        .title-gold { color: var(--intel-gold) !important; }
+        
+        p { color: var(--text-muted); margin-bottom: 0.8rem; font-size: 0.95rem; }
+        p:last-child { margin-bottom: 0; }
+        
+        ul.list { list-style: none; padding: 0; }
+        ul.list li {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        ul.list li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Grid Spanning */
+        .span-4 { grid-column: span 4; }
+        .span-2 { grid-column: span 2; }
+        
+        .header-card { text-align: center; padding: 4rem 2rem; }
+        .header-card h1 { font-size: 3.5rem; margin-bottom: 0.5rem; }
+        .header-card p.subtitle { 
+            font-size: 1.1rem; 
+            font-family: var(--font-mono); 
+            color: var(--matrix-green); 
+        }
+
+        .skills-card { grid-row: span 2; justify-content: flex-start; }
+        
+        .section-title {
+            grid-column: span 4;
+            background: transparent;
+            border: none;
+            backdrop-filter: none;
+            padding: 1.5rem 0 0 0;
+            box-shadow: none;
+            transform: none !important;
+        }
+        .section-title h2 { 
+            color: var(--text-muted); 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 3px; 
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+        }
+        .section-title h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-color);
+            margin-left: 1.5rem;
+        }
+        .section-title::before { display: none; }
+
+        /* Tags */
+        .tag-group { margin-bottom: 1.5rem; }
+        .tag-group-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 0.8rem; font-family: var(--font-mono); }
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            color: #d0d0d0;
+            transition: 0.2s;
+        }
+        .tag:hover {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: var(--cyber-blue);
+            color: #fff;
+        }
+        .tag-gold:hover {
+            background: rgba(234, 179, 8, 0.1);
+            border-color: var(--intel-gold);
+            color: #fff;
+        }
+
+        /* Buttons */
+        .btn-action {
+            display: inline-block;
+            padding: 0.35rem 0.8rem;
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+            text-decoration: none;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+        .btn-action:hover {
+            background: var(--matrix-green);
+            color: #000;
+        }
+
+        /* Typing Animation */
+        .typing-container {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #e0e0e0;
+            min-height: 80px;
+            font-family: var(--font-mono);
+        }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background-color: var(--matrix-green);
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Scroll Animation Class */
+        .fade-in-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .bento-grid { grid-template-columns: repeat(2, 1fr); }
+            .span-4, .span-2 { grid-column: span 2; }
+            .skills-card { grid-row: auto; }
+        }
+        @media (max-width: 600px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .span-4, .span-2 { grid-column: span 1; }
+            .header-card h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bento-grid">
+        
+        <div class="card span-4 header-card scroll-anim">
+            <h1><span class="gradient-text">Neev Patel</span></h1>
+            <p class="subtitle">AI & Data Science Student | Geopolitical Analyst</p>
+        </div>
+
+        <div class="card span-2 bio-card scroll-anim">
+            <h2>About Me</h2>
+            <div class="typing-container">
+                <span id="typed-text"></span><span class="cursor"></span>
+            </div>
+            <p style="margin-top: 1.5rem;">I am a student at <strong>Shah and Anchor Kutchhi Engineering College, Mumbai</strong>, specializing in AI & Data Science. Alongside my engineering coursework, I am deeply passionate about geopolitical analysis—merging technical rigor with global affairs.</p>
+        </div>
+
+        <div class="card span-2 skills-card scroll-anim">
+            <h2>Dual Competencies</h2>
+            <div class="tag-group">
+                <div class="tag-group-title">Software & AI</div>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Java</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">NLP</span>
+                    <span class="tag">Machine Learning</span>
+                </div>
+            </div>
+            <div class="tag-group">
+                <div class="tag-group-title">Intelligence & Analysis</div>
+                <div class="tags">
+                    <span class="tag tag-gold">OSINT</span>
+                    <span class="tag tag-gold">Risk Assessment</span>
+                    <span class="tag tag-gold">Strategic Forecasting</span>
+                    <span class="tag tag-gold">Data Literacy</span>
+                </div>
+            </div>
+            <div class="tag-group">
+                <div class="tag-group-title">Soft Skills</div>
+                <div class="tags">
+                    <span class="tag">Leadership</span>
+                    <span class="tag">Teamwork</span>
+                    <span class="tag">Research</span>
+                    <span class="tag">Debate & Public Speaking</span>
+                    <span class="tag">Project Management</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card span-2 scroll-anim">
+            <h2>The Hybrid Advantage</h2>
+            <ul class="list">
+                <li>
+                    <strong style="color: #fff;">Data-Driven Geopolitics</strong><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">By combining an engineering mindset with political science, I separate signal from noise, relying on mathematics, algorithms, and objective data rather than pure rhetoric.</span>
+                </li>
+                <li>
+                    <strong style="color: #fff;">Clear Communication</strong><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">As an active competitive debater, I excel at distilling complex code or intricate global conflicts into clear, persuasive, and actionable summaries.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card span-4 section-title scroll-anim">
+            <h2>01 // Tech Projects & Research</h2>
+        </div>
+
+        <div class="card span-2 scroll-anim">
+            <div class="tag-group-title">Software Engineering</div>
+            <h3>Inventory Management System</h3>
+            <p>A robust console application engineered to handle dynamic product tracking and stock updates. Designed with strict object-oriented principles to simulate real-world logistics and data workflows.</p>
+             <div class="tags" style="margin-top: 1rem;">
+                <span class="tag">Java</span>
+                <span class="tag">OOP</span>
+                <span class="tag">CRUD</span>
+             </div>
+        </div>
+
+        <div class="card span-2 scroll-anim">
+            <div class="tag-group-title">Cybersecurity Tech</div>
+            <h3>File Encryption & Decryption</h3>
+            <p>A secure utility application built to protect sensitive files using cryptographic algorithms. Demonstrates practical knowledge of file I/O operations and foundational security concepts.</p>
+             <div class="tags" style="margin-top: 1rem;">
+                <span class="tag">Java</span>
+                <span class="tag">File I/O</span>
+                <span class="tag">Cryptography</span>
+             </div>
+        </div>
+        
+        <div class="card span-2 scroll-anim">
+            <div class="tag-group-title">Research Focus</div>
+            <h3 class="title-gold">Geopolitical Risk & OSINT</h3>
+            <p>Applying Open-Source Intelligence (OSINT) and data-driven research to monitor global trends, analyze political instability, and understand complex international environments as an active passion project.</p>
+             <div class="tags" style="margin-top: 1rem;">
+                <span class="tag tag-gold">OSINT</span>
+                <span class="tag tag-gold">Risk Analysis</span>
+                <span class="tag tag-gold">Forecasting</span>
+             </div>
+        </div>
+
+        <div class="card span-2 scroll-anim">
+            <h2>Background & Credentials</h2>
+            <ul class="list">
+                <li>
+                    <strong style="color: var(--cyber-blue);">Academic Standing</strong><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">First Year (FY) B.Tech Student &middot; AI & Data Science</span>
+                </li>
+                <li>
+                    <strong style="color: var(--cyber-blue);">Google Developer Group</strong><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Active Member · Technology & Innovation Community</span>
+                </li>
+                <li>
+                    <strong style="color: var(--cyber-blue);">C Programming — Spoken Tutorial</strong><br>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">IIT Bombay · Course Completion Certification</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card span-4 section-title scroll-anim">
+            <h2>02 // Future & Contact</h2>
+        </div>
+
+        <div class="card span-2 scroll-anim">
+            <h2>Where I Am Headed</h2>
+            <p>I am actively seeking internships and research collaborations. My goal is to build a strong foundation in <strong>Software Engineering & AI</strong>, while continuing to expand my expertise in <strong>Geopolitical Analysis</strong>.</p>
+            <p>Ultimately, I aim to merge these fields—building tools and systems that deliver data-driven intelligence on a global scale.</p>
+        </div>
+
+        <div class="card span-2 scroll-anim" style="background: rgba(0, 229, 255, 0.05); border-color: rgba(0, 229, 255, 0.2);">
+            <h2>Let's Connect</h2>
+            <p>Reach out directly to discuss tech collaborations, research opportunities, or just to talk geopolitics.</p>
+            <ul class="list" style="margin-top: 1.5rem;">
+                <li style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <strong style="color: var(--matrix-green);">Work Email:</strong>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="color: #fff;">neev.patel25@sakec.ac.in</span>
+                        <a href="mailto:neev.patel25@sakec.ac.in" class="btn-action">Send Mail ↗</a>
+                    </div>
+                </li>
+                <li style="display: flex; flex-direction: column; gap: 0.4rem;">
+                    <strong style="color: var(--matrix-green);">Personal Email:</strong>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="color: #fff;">neevpatel2404@gmail.com</span>
+                        <a href="mailto:neevpatel2404@gmail.com" class="btn-action">Send Mail ↗</a>
+                    </div>
+                </li>
+                <li style="display: flex; flex-direction: column; gap: 0.4rem; border-bottom: none; padding-bottom: 0;">
+                    <strong style="color: var(--matrix-green);">GitHub:</strong>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                        <span style="color: #fff;">github.com/NeevPatel</span>
+                        <a href="https://github.com/NeevPatel" class="btn-action">View Code ↗</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 3D Tilt Effect on Mouse Move ---
+        const cards = document.querySelectorAll('.card:not(.section-title)');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;  
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                card.style.transition = `transform 0.5s ease`;
+                setTimeout(() => card.style.transition = '', 500);
+            });
+        });
+
+        // --- Fade-In On Scroll Animation ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('fade-in-visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
+
+        // --- High-End Typing Animation ---
+        const textToType = "An engineering student bridging the gap between artificial intelligence and international relations.";
+        const typeTarget = document.getElementById('typed-text');
+        let charIndex = 0;
+
+        function typeEffect() {
+            if (charIndex < textToType.length) {
+                const typingSpeed = Math.random() * 40 + 20; 
+                typeTarget.textContent += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeEffect, typingSpeed);
+            }
+        }
+
+        setTimeout(typeEffect, 1000);
+    </script>
+</body>
+</html>
